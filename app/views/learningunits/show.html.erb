@@ -1,0 +1,125 @@
+<!-- Responsive panel example-->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @learningunit.theme.name %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <dl class="dl-horizontal">
+
+              <dt>Network</dt>
+              <dd><%= @learningunit.network.name %></dd>
+
+            </dl>
+            <div class="btn-group btn-group-justified">
+              <a href="/learningunits" class="btn btn-primary">
+                <i class="fa fa-chevron-left"></i>
+              </a>
+
+              <a href="/learningunits/<%= @learningunit.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+
+              <a href="/delete_learningunit/<%= @learningunit.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End responsive panel example -->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @learningunit.theme.name %> Resources</h3>
+      </div>
+
+              <div>
+                  <table class="table table-striped table-hover ">
+                    <thead>
+                      <tr>
+                        <th>Resource</th>
+                        <th>Name</th>
+                        <th>Rating</th>
+                        <th>Edit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <% @learningunit.uniqueresources.each do |uniqueresource| %>
+                      <tr>
+                        <td><img height="40px" src="<%= uniqueresource.mastertoy.thumbnailurl %>"></td>
+                        <td><%= uniqueresource.mastertoy.name %></td>
+                        <td><%= uniqueresource.rating %></td>
+                        <td><a href="/uniqueresources/<%= uniqueresource.id %>/edit" class="btn btn-secondary"><i class="fa fa-edit"></i></a></td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+
+</div>
+</div>
+</div>
+
+<!-- Add The New Unique Resource-->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Add A New Resource</h3>
+      </div>
+
+      <div class="panel-body">
+        <form action="/create_uniqueresource" method="post" class="form-horizontal">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+          <!-- Label and input for rating -->
+          <div class="form-group">
+            <label for="rating" class="col-sm-2 control-label">
+              Rating
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="rating" name="rating" placeholder="Rating" class="form-control" value="<%= @uniqueresource.rating %>">
+            </div>
+          </div>
+
+          <!-- hidden place for learning unit id-->
+          <input type="hidden" name="learningunit_id" value="<%= @learningunit.id %>">
+
+
+          <!-- Label and input for mastertoy_id -->
+          <div class="form-group">
+            <label for="mastertoy_id" class="col-sm-2 control-label">
+              Mastertoy
+            </label>
+            <div class="col-sm-10">
+              <%= select_tag(:mastertoy_id, options_from_collection_for_select(Mastertoy.all, :id, :name, @uniqueresource.mastertoy_id), :class => "form-control") %>
+              <!--<input type="text" id="mastertoy_id" name="mastertoy_id" placeholder="Mastertoy" class="form-control" value="<%= @uniqueresource.mastertoy_id %>">-->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button class="btn btn-success">
+                Create Uniqueresource
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
