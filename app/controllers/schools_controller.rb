@@ -18,7 +18,7 @@ class SchoolsController < ApplicationController
     @school.network_id = params[:network_id]
 
     if @school.save
-      redirect_to "/schools", :notice => "School created successfully."
+      redirect_to :back, :notice => "School created successfully."
     else
       render 'new'
     end

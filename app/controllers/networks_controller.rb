@@ -1,12 +1,13 @@
 class NetworksController < ApplicationController
   def index
-    #@networks = current_user.networks
-    @networks = Network.all
+    @networks = current_user.networks
+    #@networks = Network.all
   end
 
   def show
     @network = Network.find(params[:id])
     @learningunit = Learningunit.new
+    @school = School.new
   end
 
   def new
